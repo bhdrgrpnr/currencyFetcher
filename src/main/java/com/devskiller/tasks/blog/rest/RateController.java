@@ -1,11 +1,13 @@
 package com.devskiller.tasks.blog.rest;
 
+import com.devskiller.tasks.blog.model.Rate;
 import com.devskiller.tasks.blog.model.dto.CommentDto;
 import com.devskiller.tasks.blog.model.dto.NewCommentDto;
 import com.devskiller.tasks.blog.model.dto.RateDto;
 import com.devskiller.tasks.blog.service.CommentService;
 import com.devskiller.tasks.blog.service.CurrencyService;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -34,8 +36,15 @@ public class RateController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<RateDto> getAllRates() {
-		return currencyService.findAllRates();
+	public ResponseEntity<List<RateDto>> getAllRates() {
+
+		List<Rate> allRates = currencyService.findAllRates();
+
+		List<RateDto> allRateDtos = new ArrayList<>();
+		for(Rate rate : allRates){
+			allRateDtos.add(new RateDto(rate.getBid(), rate.getBidSize(), rate.getAsk(),rate.getAskSize(), rate.getDailyChange(), rate.getDailyChangeRelative(), rate.getLastPrice(), rate.getVolume(), rate.getHigh(), rate.getLow(), rate.getTimeStamp()));
+		}
+		return ResponseEntity.ok(allRateDtos);
 	}
 
 	@DeleteMapping
@@ -45,12 +54,17 @@ public class RateController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<RateDto> updateRates(@PathVariable("id") long id, @RequestBody RateDto rateDto) {
+	public ResponseEntity<Boolean> updateRates(@PathVariable("id") long id, @RequestBody RateDto rateDto) {
 		try{
-			return ResponseEntity.ok(currencyService.updateRate(id, rateDto));
+			currencyService.updateRate(id, fromDto(rateDto));
+			return ResponseEntity.ok(Boolean.TRUE);
 		}catch (InvalidParameterException e){
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
+	}
+
+	private Rate fromDto(RateDto rateDto){
+		return new Rate(rateDto.getBid(), rateDto.getBidSize(), rateDto.getAsk(),rateDto.getAskSize(), rateDto.getDailyChange(), rateDto.getDailyChangeRelative(), rateDto.getLastPrice(), rateDto.getVolume(), rateDto.getHigh(), rateDto.getLow(), rateDto.getTimeStamp());
 	}
 
 }

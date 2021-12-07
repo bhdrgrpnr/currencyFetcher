@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 
 import com.devskiller.tasks.blog.model.Post;
+import com.devskiller.tasks.blog.model.Rate;
 import com.devskiller.tasks.blog.model.dto.CommentDto;
 import com.devskiller.tasks.blog.model.dto.NewCommentDto;
 import com.devskiller.tasks.blog.model.dto.RateDto;
@@ -37,28 +38,54 @@ public class RateServiceTest {
 
 		currencyService.deleteAllRates();
 		//Hopefully there will be less than 10 secs between execution of these methods so this test wont fail.
-		List<RateDto> allRates = currencyService.findAllRates();
+		List<Rate> allRates = currencyService.findAllRates();
 		Assert.assertTrue(allRates.size() <=1);
 	}
 
 	@Test
-	public void deleteAll() {
-		List<RateDto> allRates = currencyService.findAllRates();
-		RateDto rateDtoToBeUpdated = allRates.get(0);
-		rateDtoToBeUpdated.setAsk(1f);
-		rateDtoToBeUpdated.setAskSize(2f);
-		rateDtoToBeUpdated.setBidSize(3f);
-		rateDtoToBeUpdated.setBid(4f);
-		rateDtoToBeUpdated.setDailyChange(5f);
-		rateDtoToBeUpdated.setDailyChangeRelative(6f);
-		rateDtoToBeUpdated.setHigh(7f);
-		rateDtoToBeUpdated.setLow(8f);
-		rateDtoToBeUpdated.setVolume(9f);
+	public void updateRate() throws InterruptedException {
 
+		float ask = 1f;
+		float askSize = 2f;
+		float bidSize = 3f;
+		float bid = 4f;
+		float dailyChange = 5f;
+		float dailyChangeRelative = 6f;
+		float high = 7f;
+		float low = 8f;
+		float volume = 9f;
+		float lastPrice = 10f;
 
-		currencyService.updateRate(rateDtoToBeUpdated.ge , rateDtoToBeUpdated);
+		//we should wait for scheduler(cron job) to run at least once
+		Thread.sleep(20000);
 
+		List<Rate> allRates = currencyService.findAllRates();
+		Rate rateToBeUpdated = allRates.get(0);
+		rateToBeUpdated.setAsk(ask);
+		rateToBeUpdated.setAskSize(askSize);
+		rateToBeUpdated.setBidSize(bidSize);
+		rateToBeUpdated.setBid(bid);
+		rateToBeUpdated.setDailyChange(dailyChange);
+		rateToBeUpdated.setDailyChangeRelative(dailyChangeRelative);
+		rateToBeUpdated.setHigh(high);
+		rateToBeUpdated.setLow(low);
+		rateToBeUpdated.setVolume(volume);
+		rateToBeUpdated.setLastPrice(lastPrice);
 
+		currencyService.updateRate(rateToBeUpdated.getId(), rateToBeUpdated);
+
+		Rate rateUpdated = currencyService.findById(rateToBeUpdated.getId());
+
+		Assert.assertEquals(rateUpdated.getAsk(), ask, 0.0001);
+		Assert.assertEquals(rateUpdated.getAskSize(), askSize, 0.0001);
+		Assert.assertEquals(rateUpdated.getBid(), bid, 0.0001);
+		Assert.assertEquals(rateUpdated.getBidSize(), bidSize, 0.0001);
+		Assert.assertEquals(rateUpdated.getDailyChange(), dailyChange, 0.0001);
+		Assert.assertEquals(rateUpdated.getDailyChangeRelative(), dailyChangeRelative, 0.0001);
+		Assert.assertEquals(rateUpdated.getHigh(), high, 0.0001);
+		Assert.assertEquals(rateUpdated.getLow(), low, 0.0001);
+		Assert.assertEquals(rateUpdated.getVolume(), volume, 0.0001);
+		Assert.assertEquals(rateUpdated.getLastPrice(), lastPrice, 0.0001);
 	}
 
 

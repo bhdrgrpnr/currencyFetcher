@@ -45,21 +45,19 @@ public class CurrencyService {
 		rateRepository.save(new Rate(rateDto.getBid(), rateDto.getBidSize(), rateDto.getAsk(),rateDto.getAskSize(), rateDto.getDailyChange(), rateDto.getDailyChangeRelative(), rateDto.getLastPrice(), rateDto.getVolume(), rateDto.getHigh(), rateDto.getLow(), rateDto.getTimeStamp()));
 	}
 
-	public List<RateDto> findAllRates() {
-		List<Rate> rates = rateRepository.findAll();
-		List<RateDto> rateDtos = new ArrayList<>();
-		for(Rate rate : rates){
-			rateDtos.add(new RateDto(rate.getBid(), rate.getBidSize(), rate.getAsk(),rate.getAskSize(), rate.getDailyChange(), rate.getDailyChangeRelative(), rate.getLastPrice(), rate.getVolume(), rate.getHigh(), rate.getLow(), rate.getTimeStamp()));
-		}
+	public List<Rate> findAllRates() {
+		return rateRepository.findAll();
+	}
 
-		return rateDtos;
+	public Rate findById(long id) {
+		return rateRepository.findById(id).get();
 	}
 
 	public void deleteAllRates() {
 		rateRepository.deleteAll();
 	}
 
-	public RateDto updateRate(long rateId, RateDto rateDto) {
+	public void updateRate(long rateId, Rate rate) {
 		Optional<Rate> rateToBeUpdatedOpt = rateRepository.findById(rateId);
 
 		if(!rateToBeUpdatedOpt.isPresent()){
@@ -67,18 +65,18 @@ public class CurrencyService {
 		}
 
 		Rate rateToBeUpdated = rateToBeUpdatedOpt.get();
-		rateToBeUpdated.setAsk(rateDto.getAsk());
-		rateToBeUpdated.setAskSize(rateDto.getAskSize());
-		rateToBeUpdated.setBid(rateDto.getBid());
-		rateToBeUpdated.setBidSize(rateDto.getBidSize());
-		rateToBeUpdated.setDailyChange(rateDto.getDailyChange());
-		rateToBeUpdated.setDailyChangeRelative(rateDto.getDailyChangeRelative());
-		rateToBeUpdated.setHigh(rateDto.getHigh());
-		rateToBeUpdated.setLow(rateDto.getLow());
-		rateToBeUpdated.setLastPrice(rateDto.getLastPrice());
-		rateToBeUpdated.setVolume(rateDto.getVolume());
+		rateToBeUpdated.setAsk(rate.getAsk());
+		rateToBeUpdated.setAskSize(rate.getAskSize());
+		rateToBeUpdated.setBid(rate.getBid());
+		rateToBeUpdated.setBidSize(rate.getBidSize());
+		rateToBeUpdated.setDailyChange(rate.getDailyChange());
+		rateToBeUpdated.setDailyChangeRelative(rate.getDailyChangeRelative());
+		rateToBeUpdated.setHigh(rate.getHigh());
+		rateToBeUpdated.setLow(rate.getLow());
+		rateToBeUpdated.setLastPrice(rate.getLastPrice());
+		rateToBeUpdated.setVolume(rate.getVolume());
 
-		return toRateDto(rateRepository.save(rateToBeUpdated));
+		rateRepository.save(rateToBeUpdated);
 	}
 
 	private RateDto toRateDto(Rate rate){
