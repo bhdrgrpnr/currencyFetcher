@@ -1,0 +1,91 @@
+# Logs and databases #
+######################
+*.log
+data/version.json
+tools/deployment/version.txt
+deb/.version
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Temporary swap files #
+#####################
+*~
+.#*
+*.swp
+*.swo
+
+# Bazel #
+#####################
+/bazel-bin
+/bazel-genfiles
+/bazel-out
+/bazel-testlogs
+/bazel-tink-backend
+user.bazelrc
+
+# Editors
+.ijwb
+.idea
+.vscode
+.project
+
+# Sonar #
+#####################
+.scannerwork
+
+# Intellij specific #
+#####################
+.metadata/
+.ideal/
+*.iml
+
+# Removed submodules
+tink-oauth-grpc
+
+# Translation temp files
+po/provider
+po/backend
+
+# Generated secrets uploading scripts
+src/tink-integration-eidas-secrets-service/tink_secret_utils/tink_secret_utils*.py
+tink_pinned_certs.py
+
+# Generated python proto code tink_secret_utils
+src/tink-integration-eidas-secrets-service/tink_secret_utils/tests/generated/*
+src/tink-integration-eidas-secrets-service/tink_secret_utils_2/tests/generated/*
+
+# Generated signed file tink_secret_utils
+src/tink-integration-eidas-secrets-service/tink_secret_utils/signed.pdf
+src/tink-integration-eidas-secrets-service/tink_secret_utils/signed.json
+
+# Generated csr file tink_secret_utils
+src/tink-integration-eidas-secrets-service/tink_secret_utils/*.csr
+
+# Virtual env
+**/.venv*
+
+# Python
+*.pyc
+**/*.egg-info
+.python-version
+
+# Generated protobuf
+*.pb.go
+
+# jenv version files
+**/.java-version
+
+# payments tink link generator config file
+tools/payments/tinklink_payments_python/tinklink_config.ini
+
+# Payment tink link generator default Payment requests directory
+tools/payments/tinklink_payments_python/Payment_Requests
