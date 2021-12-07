@@ -2,7 +2,6 @@ package com.devskiller.tasks.blog.rest;
 
 import com.devskiller.tasks.blog.model.dto.CommentDto;
 import com.devskiller.tasks.blog.model.dto.NewCommentDto;
-import com.devskiller.tasks.blog.service.CommentService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

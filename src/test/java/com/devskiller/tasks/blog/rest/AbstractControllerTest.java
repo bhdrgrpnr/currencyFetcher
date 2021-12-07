@@ -10,9 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.devskiller.tasks.blog.service.CommentService;
-import com.devskiller.tasks.blog.service.PostService;
-
 @RunWith(SpringRunner.class)
 @WebMvcTest
 public abstract class AbstractControllerTest {

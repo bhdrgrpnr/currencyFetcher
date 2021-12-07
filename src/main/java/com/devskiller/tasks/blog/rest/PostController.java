@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devskiller.tasks.blog.model.dto.PostDto;
-import com.devskiller.tasks.blog.service.PostService;
 
 @Controller
 @RestController

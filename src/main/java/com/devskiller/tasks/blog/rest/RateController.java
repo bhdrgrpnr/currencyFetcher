@@ -1,14 +1,10 @@
 package com.devskiller.tasks.blog.rest;
 
 import com.devskiller.tasks.blog.model.Rate;
-import com.devskiller.tasks.blog.model.dto.CommentDto;
-import com.devskiller.tasks.blog.model.dto.NewCommentDto;
 import com.devskiller.tasks.blog.model.dto.RateDto;
-import com.devskiller.tasks.blog.service.CommentService;
 import com.devskiller.tasks.blog.service.CurrencyService;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
